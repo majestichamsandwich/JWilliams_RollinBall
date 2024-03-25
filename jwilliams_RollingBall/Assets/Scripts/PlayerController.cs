@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
 {
 
     private Rigidbody playerRB;
+    public Transform cam;
 
 
     [SerializeField] private float jumpForce;
@@ -41,12 +42,21 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        float moveHorizontal = Input.GetAxis("Horizontal") * speed;
-        float moveVertical = Input.GetAxis("Vertical") * speed;
+        float moveHorizontal = Input.GetAxis("Horizontal") * Time.deltaTime * speed;
+        float moveVertical = Input.GetAxis("Vertical") * Time.deltaTime * speed;
 
         Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
 
-        playerRB.AddForce(movement * speed * Time.deltaTime);
+        if(movement.magnitude > 0.1f)
+        {
+            float targetAngle = Mathf.Atan2(movement.x, movement.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
+
+            Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+
+            playerRB.AddForce(moveDir * speed * Time.deltaTime);
+        }
+
+      
     }
 
     private void Jump()
