@@ -402,6 +402,7 @@
 -analyzer:"C:/Program Files/Unity/Hub/Editor/2023.1.9f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll"
 "Assets/Scripts/CameraController.cs"
 "Assets/Scripts/EnemyScript.cs"
+"Assets/Scripts/Enemy_patrol.cs"
 "Assets/Scripts/PlayerController.cs"
 "Assets/TutorialInfo/Scripts/Readme.cs"
 -langversion:9.0

@@ -12,10 +12,20 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private float jumpForce;
     [SerializeField] private float speed;
+    [SerializeField] private float rayDistance;
+    Vector3 velocity;
+
+    private bool isJumping;
+    public bool isPoweredUp;
+    public float powerBounceStrength;
+    public float powerupTime = 7f;
+
+    [SerializeField] private LayerMask ground;
+
 
     bool isGrounded()
     {
-        return Physics.Raycast(transform.position, -Vector3.up, 0.65f);
+        return Physics.Raycast(transform.position, -Vector3.up, rayDistance);
     }
     
 
@@ -27,15 +37,9 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        Debug.DrawRay(transform.position, -Vector3.up, Color.red);
         if (Input.GetButtonDown("Jump"))
         {
             Jump();
-        }
-
-        if (Input.GetButtonDown("Fire1"))
-        {
-            Debug.Log(isGrounded());
         }
     }
 
@@ -59,11 +63,42 @@ public class PlayerController : MonoBehaviour
       
     }
 
+
     private void Jump()
     {
         if (isGrounded() == true) 
         {
             playerRB.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        }
+    }
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("PowerUp"))
+        {
+            isPoweredUp = true;
+            Destroy(other.gameObject);
+            StartCoroutine(PowerUpCountDownRoutine());
+        }
+    }
+
+
+    IEnumerator PowerUpCountDownRoutine()
+    {
+        yield return new WaitForSeconds(powerupTime);
+        isPoweredUp = false;
+    }
+
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy") && isPoweredUp == true)
+        {
+            Rigidbody enemyRB = collision.gameObject.GetComponent<Rigidbody>();
+
+            Vector3 bounceDir = (collision.gameObject.transform.position - transform.position);
+            enemyRB.AddForce(bounceDir * powerBounceStrength, ForceMode.Impulse);
         }
     }
 
