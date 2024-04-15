@@ -11,6 +11,11 @@ scopes = {
 	"last_search.957775A5" = ""
 	"OpenInspectorPreview.957775A5" = "0"
 	"currentGroup.957775A5" = null
+	"picker_window_position_offset.0B486DF2" = "853;51;320;550"
+	"picker_search_text.0B486DF2" = ""
+	"last_search.0B486DF2" = ""
+	"OpenInspectorPreview.0B486DF2" = "0"
+	"currentGroup.0B486DF2" = null
 }
 providers = {
 	asset = {
