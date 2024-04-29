@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody playerRB;
     public Transform cam;
+    public GameManager gameManager;
 
 
     [SerializeField] private float jumpForce;
@@ -60,7 +61,7 @@ public class PlayerController : MonoBehaviour
             playerRB.AddForce(moveDir * speed * Time.deltaTime);
         }
 
-      
+        
     }
 
 
@@ -101,5 +102,4 @@ public class PlayerController : MonoBehaviour
             enemyRB.AddForce(bounceDir * powerBounceStrength, ForceMode.Impulse);
         }
     }
-
 }
